@@ -1,0 +1,405 @@
+<!doctype html><html><head><meta charset=utf8><meta name="robots" content="noindex,nofollow"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>BLMS AI e Clínica Eduardo Parente</title>
+<link rel="stylesheet" href="fontes/fontes.css">
+<style>
+/* documento em volta: paleta BLMS AI. So as simulacoes (telas que seriam da clinica) usam as cores da clinica */
+:root {
+  --creme: #F0EFEC; --papel: #FAF9F7; --linha: #DCE1EA; --tinta: #17130D; --cinza: #5E5548; --apagado: #8A8071; --noite: #0F0C08;
+  --verde: #0E5C3A; --verde-fundo: #0A4429; --luz: #4FA97C; --mist: #F0EADD; --mist2: #A99E8B;
+  --disp: 'Archivo', Arial, sans-serif; --corpo: 'Instrument Sans', Arial, sans-serif;
+  --sombra: 0 24px 48px -32px rgb(23 19 13 / .30);
+  --c-ink: #0C111B; --c-ink2: #121A28; --c-bone: #F4F1EA; --c-halo: #9DC4D6; --c-halo2: #5E93AC; --c-deep: #3F6E85;
+}
+* { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+body { background: var(--creme); color: var(--tinta); font: 17px/1.55 var(--corpo); -webkit-font-smoothing: antialiased }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px }
+h1, h2 { font-family: var(--disp); font-weight: 800; letter-spacing: -2px; line-height: 1.02 }
+h2 { font-size: clamp(36px, 5vw, 56px); margin-bottom: 20px }
+.cinza { color: var(--cinza) }
+section { padding: 96px 0 }
+a { color: inherit }
+.escuro { background: var(--tinta); color: var(--mist) }
+.escuro .cinza { color: var(--mist2) }
+
+.logo { font: 800 22px/1 var(--disp); letter-spacing: -.8px; display: inline-flex; align-items: baseline; white-space: nowrap }
+.logo i { display: inline-block; width: .26em; height: .26em; border-radius: .06em; background: var(--verde); margin: 0 .07em 0 .08em }
+.logo span { color: var(--apagado) }
+.escuro .logo i { background: var(--luz) }
+.escuro .logo span { color: var(--mist2) }
+
+/* capa */
+.capa { padding: 40px 0 104px }
+.capa .grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 56px; align-items: center; margin-top: 80px }
+.capa h1 { font-size: clamp(46px, 6.4vw, 84px); letter-spacing: -3px }
+.capa .sub { font-size: 20px; margin-top: 28px; max-width: 480px }
+.capa .info { margin-top: 36px; font-size: 15px }
+.bt { display: inline-block; font: 600 15px/1 var(--corpo); text-decoration: none; background: var(--verde); color: var(--mist); border-radius: 99px; padding: 14px 22px; white-space: nowrap }
+.capa .bt { margin-top: 36px }
+.vitrine { position: relative; aspect-ratio: 1.3 }
+.tela { position: absolute; inset: 0 22% 14% 0; border-radius: 24px; overflow: hidden; border: 1px solid #2c271f; box-shadow: 0 30px 60px -24px #000; background: #faf6e9 }
+.cel { position: absolute; right: 0; bottom: 0; width: 34%; aspect-ratio: .48; border-radius: 32px; overflow: hidden; border: 7px solid #2c271f; box-shadow: 0 30px 60px -24px #000; background: #0c0c0b }
+.tela img, .cel img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: left top }
+
+/* quem somos */
+.quem { display: grid; grid-template-columns: 2fr 1fr; gap: 64px; align-items: start }
+.quem > * { min-width: 0 }
+.quem .grande { font: 700 clamp(24px, 2.6vw, 32px)/1.3 var(--disp); letter-spacing: -.6px }
+.quem .grande + p { margin-top: 24px; color: var(--cinza); max-width: 640px }
+
+/* modulos */
+.duas-col { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start }
+.duas-col.inv { grid-template-columns: 2fr 1fr }
+.duas-col > * { min-width: 0 }
+.intro { position: sticky; top: 32px }
+.intro > p { color: var(--cinza) }
+.destaque { border-radius: 28px; padding: 28px 32px; background: linear-gradient(135deg, rgb(79 169 124 / .10), rgb(14 92 58 / .17)); border: 1px solid rgb(14 92 58 / .40); margin-top: 32px }
+.destaque b { color: var(--verde) }
+.destaque p + p { margin-top: 12px; color: var(--cinza) }
+.mods { border-top: 2px solid var(--tinta) }
+.mod { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 56px 1fr auto; gap: 20px; width: 100%; padding: 22px 8px 22px 0; border-bottom: 1px solid var(--linha); transition: background .15s }
+.mod:hover { background: var(--papel) }
+.mod:focus-visible { outline: 2px solid var(--luz); outline-offset: 2px }
+.mod .n { font: 800 20px/1.3 var(--disp); color: var(--apagado) }
+.mod b { display: block; font: 700 21px/1.3 var(--disp); letter-spacing: -.3px }
+.mod .d { display: block; color: var(--cinza); font-size: 15.5px; margin-top: 6px }
+.mod .z { display: block; font-size: 14px; font-style: italic; color: var(--cinza); margin-top: 8px }
+.mod .bt { align-self: center; font-size: 14px; padding: 11px 16px; transition: background .15s }
+.mod:hover .bt { background: var(--verde-fundo) }
+.mod .bt.sim { background: transparent; color: var(--verde); box-shadow: inset 0 0 0 1.5px var(--verde) }
+.mod:hover .bt.sim { background: rgb(14 92 58 / .08) }
+
+/* como trabalhamos */
+.lista { list-style: none; border-top: 2px solid var(--tinta) }
+.lista li { border-bottom: 1px solid var(--linha); padding: 20px 0; display: grid; grid-template-columns: 240px 1fr; gap: 24px }
+.lista b { font: 700 21px/1.3 var(--disp); letter-spacing: -.3px }
+.lista span { color: var(--cinza) }
+.card { background: var(--papel); border: 1px solid var(--linha); border-radius: 24px; padding: 28px; box-shadow: var(--sombra) }
+.card h3 { font: 700 22px/1.2 var(--disp); letter-spacing: -.4px; margin-bottom: 8px }
+.card dl { margin: 12px 0 20px }
+.card dl div { padding: 10px 0; border-bottom: 1px solid var(--linha) }
+.card dl div:last-child { border: 0 }
+.card dt { font-size: 14px; color: var(--cinza) }
+.card dd { font-weight: 600; overflow-wrap: anywhere }
+.card dd a { text-decoration: none }
+.perguntas { list-style: none; counter-reset: p; border-top: 2px solid var(--tinta) }
+.perguntas li { counter-increment: p; border-bottom: 1px solid var(--linha); padding: 18px 0 18px 56px; position: relative; font: 600 19px/1.35 var(--disp); letter-spacing: -.2px }
+.perguntas li::before { content: counter(p, decimal-leading-zero); position: absolute; left: 0; top: 18px; font-weight: 800; color: var(--apagado) }
+footer { padding: 40px 0 }
+footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 14px }
+
+/* modal */
+dialog { border: 0; padding: 0; background: transparent; max-width: min(1040px, calc(100vw - 24px)); width: 100%; margin: auto }
+dialog::backdrop { background: rgb(15 12 8 / .72); backdrop-filter: blur(4px) }
+.modal { background: var(--papel); border-radius: 24px; overflow: hidden; display: grid; grid-template-columns: 1fr 340px; outline: none }
+.palco { background: #141210; display: grid; place-items: center; min-height: 520px; padding: 24px; position: relative }
+.palco video { max-width: 100%; max-height: 74vh; border-radius: 12px; display: block }
+.lado { padding: 28px; display: flex; flex-direction: column; gap: 10px }
+.lado .tipo { font-style: italic; color: var(--verde); font-size: 14.5px }
+.lado h3 { font: 700 24px/1.2 var(--disp); letter-spacing: -.5px }
+.lado p { color: var(--cinza); font-size: 15.5px }
+.navs { margin-top: auto; padding-top: 16px; display: flex; gap: 8px }
+.navs button { font: 600 14px var(--corpo); background: var(--creme); color: var(--tinta); border: 1px solid var(--linha); border-radius: 99px; padding: 9px 16px; cursor: pointer }
+.navs button:hover { border-color: var(--verde) }
+.navs button:focus:not(:focus-visible) { outline: none }
+.navs [data-fechar] { margin-left: auto; background: var(--verde); color: var(--mist); border-color: var(--verde) }
+
+/* simulacoes: telas que seriam da clinica, nas cores da clinica */
+.cel-sim { width: 300px; height: 560px; border-radius: 36px; background: #0b141a; border: 8px solid #2a2620; overflow: hidden; display: flex; flex-direction: column; font-family: 'Manrope', var(--corpo) }
+.cel-sim .barra { background: #1f2c33; padding: 12px 14px; display: flex; gap: 10px; align-items: center; color: #e9edef; font-size: 14px; font-weight: 600 }
+.cel-sim .barra i { width: 30px; height: 30px; border-radius: 50%; background: var(--c-halo); display: grid; place-items: center; font: 600 12px 'Fraunces', serif; color: var(--c-ink); font-style: normal }
+.cel-sim .barra small { display: block; font-weight: 400; font-size: 11px; color: #8696a0 }
+.chat { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 6px; overflow: hidden; justify-content: flex-end }
+.b { max-width: 84%; padding: 7px 10px 6px; border-radius: 9px; font-size: 13px; line-height: 1.4; color: #e9edef; background: #202c33; align-self: flex-start; animation: entra .35s ease-out both }
+.b.eu { background: #005c4b; align-self: flex-end }
+.b .h { display: block; text-align: right; font-size: 10px; color: #8fa1a9; margin-top: 2px }
+.b .lk { display: block; margin-top: 6px; padding-top: 6px; border-top: 1px solid #ffffff1a; color: #53bdeb; text-align: center; font-weight: 600 }
+.div { align-self: center; font-size: 11px; color: #c4cdd2; background: #182229; padding: 4px 10px; border-radius: 7px; animation: entra .35s both; text-align: center }
+.digit { align-self: flex-start; background: #202c33; border-radius: 9px; padding: 9px 12px; display: flex; gap: 4px; animation: entra .2s both }
+.digit span { width: 6px; height: 6px; border-radius: 50%; background: #8696a0; animation: pula 1s infinite }
+.digit span:nth-child(2) { animation-delay: .15s } .digit span:nth-child(3) { animation-delay: .3s }
+@keyframes entra { from { opacity: 0; transform: translateY(8px) } }
+@keyframes pula { 50% { transform: translateY(-3px); opacity: .5 } }
+.painel-sim { width: min(580px, 100%); background: var(--c-ink2); color: var(--c-bone); border: 1px solid #22304a; border-radius: 16px; padding: 20px; font: 13.5px/1.45 'Manrope', var(--corpo); position: relative }
+.painel-sim h4 { font: 600 22px/1.1 'Fraunces', serif; color: var(--c-halo); margin-bottom: 14px }
+.painel-sim .nota { color: #8a97ab; margin-top: 12px }
+.msg { border: 1px solid #22304a; border-radius: 12px; padding: 14px; margin-top: 10px; animation: entra .4s both }
+.msg .quem { font-size: 12px; color: #8a97ab }
+.msg .pac { margin: 4px 0 10px; font-weight: 600 }
+.msg .sug { background: #0C111B; border-left: 3px solid var(--c-halo2); border-radius: 8px; padding: 10px 12px; color: #d9dde4 }
+.msg .acoes { display: flex; gap: 8px; margin-top: 10px; align-items: center }
+.msg .acoes span { border: 1px solid #33425e; border-radius: 99px; padding: 5px 12px; font-size: 12px }
+.msg .acoes span.ok { background: var(--c-halo); color: var(--c-ink); border-color: var(--c-halo); font-weight: 700 }
+.msg .acoes .feito { color: var(--c-halo); font-weight: 600; border: 0; padding: 0 }
+.msg.clinica { border-color: #6b5a2c; background: #1a1a1c }
+.msg.clinica .sug { border-left-color: #e0b85a; color: #f0dfb4 }
+.cursor { position: absolute; width: 18px; height: 18px; border-radius: 50%; background: #ffffff55; border: 2px solid #fff; pointer-events: none; transition: left .6s ease, top .6s ease, transform .15s; z-index: 3 }
+.cursor.clic { transform: scale(.7) }
+.painel-sim dl div { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid #22304a }
+.painel-sim dl div:last-child { border: 0 }
+.painel-sim dd { font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap }
+
+@media (max-width: 900px) {
+  .capa .grid, .duas-col, .duas-col.inv, .modal, .quem { grid-template-columns: 1fr }
+  .capa .grid { margin-top: 40px; gap: 40px }
+  .quem { gap: 40px }
+  .intro { position: static }
+  .mod { grid-template-columns: 44px 1fr; gap: 12px }
+  .mod .bt { grid-column: 2; justify-self: start }
+  .lista li { grid-template-columns: 1fr; gap: 4px }
+  .palco { min-height: 0; padding: 20px 12px }
+  .cel-sim { width: 270px; height: 500px }
+  section { padding: 64px 0 }
+  .modal { max-height: calc(100dvh - 24px); overflow-y: auto }
+  .palco video { max-height: 52dvh }
+  .lado { padding: 20px }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important } }
+</style>
+
+
+<header class="capa escuro">
+  <div class="wrap">
+    <span class="logo" aria-label="BLMS AI">BLMS<i></i><span>AI</span></span>
+    <div class="grid">
+      <div>
+        <h1>Sistemas feitos sob medida para quem atende pessoas</h1>
+        <p class="sub cinza">Quem somos, o que já está funcionando com nossos clientes e como isso pode ficar na Clínica Eduardo Parente.</p>
+        <p class="info cinza">Material da reunião de 13 de novembro de 2026.</p>
+        <a class="bt" href="#no-ar">Ver os sistemas funcionando</a>
+      </div>
+      <div class="vitrine">
+        <div class="tela"><img src="img/natalia-agenda.png" alt="Agenda do painel de um consultório odontológico"></div>
+        <div class="cel"><img src="img/ap-celular.png" alt="Agendamento online no celular"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="quem">
+  <div class="wrap quem">
+    <div>
+      <h2>A BLMS AI</h2>
+      <p class="grande">Construímos o sistema em volta do jeito que a sua equipe já trabalha: agenda, ficha do paciente, painel de gestão e WhatsApp, num lugar só.</p>
+      <p>Somos uma empresa pequena de São Paulo, de propósito. Quem conversa com vocês é quem desenha, programa e dá suporte depois. Nada de pacote pronto que obriga a clínica a mudar a rotina para caber no sistema.</p>
+    </div>
+    <div class="card">
+      <h3>O que fica com a clínica</h3>
+      <dl>
+        <div><dt>Dados</dt><dd>Pacientes e histórico são da clínica e saem em planilha quando quiserem</dd></div>
+        <div><dt>Servidor</dt><dd>Banco de dados próprio, com backup diário</dd></div>
+        <div><dt>Suporte</dt><dd>Direto pelo WhatsApp, com quem construiu</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="no-ar" style="background: var(--papel)">
+  <div class="wrap duas-col">
+    <div class="intro">
+      <h2>Já funcionando</h2>
+      <p>Gravações dos sistemas que entregamos, com dados de demonstração. Toque em um item para ver.</p>
+      <div class="destaque">
+        <p><b>Também no ar:</b> um sistema de saúde e segurança do trabalho que atende mais de 700 empresas, com agenda de exames, documentos e relatórios.</p>
+      </div>
+    </div>
+    <div class="mods" id="mods-ar"></div>
+  </div>
+</section>
+
+<section id="clinica">
+  <div class="wrap duas-col">
+    <div class="intro">
+      <h2>Como poderia ficar na clínica</h2>
+      <p>Simulações do que montaríamos para vocês, a partir do que já existe. Os nomes são fictícios.</p>
+      <div class="destaque">
+        <p><b>O Dr. Eduardo continua no controle.</b> Nenhuma resposta sobre tratamento sai sem passar pela equipe, e dúvida clínica vai sempre para ele.</p>
+      </div>
+    </div>
+    <div class="mods" id="mods-cl"></div>
+  </div>
+</section>
+
+<section id="como" style="background: var(--papel)">
+  <div class="wrap duas-col inv">
+    <div>
+      <h2>Como trabalhamos</h2>
+      <ul class="lista">
+        <li><b>Conversa</b><span>Entendemos a rotina da recepção e do consultório: como o paciente chega, quem responde, onde as coisas se perdem.</span></li>
+        <li><b>Protótipo</b><span>Antes de qualquer compromisso maior, mostramos as telas com a cara da clínica para a equipe aprovar.</span></li>
+        <li><b>Implantação</b><span>Colocamos no ar por partes, começando pelo que mais pesa no dia a dia, com treinamento de cada pessoa da equipe.</span></li>
+        <li><b>Depois</b><span>Acompanhamos o uso, ajustamos o que precisar e seguimos com suporte direto.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Fale com a BLMS AI</h3>
+      <p class="cinza" style="font-size:15px">Brandon Moruno, responsável pelos sistemas.</p>
+      <dl>
+        <div><dt>WhatsApp</dt><dd><a href="https://wa.me/5511945439292">(11) 94543-9292</a></dd></div>
+        <div><dt>E-mail</dt><dd><a href="mailto:brandon.moruno.blms@gmail.com">brandon.moruno.blms@gmail.com</a></dd></div>
+        <div><dt>Site</dt><dd>automacoesblms.com.br</dd></div>
+      </dl>
+      <a class="bt" href="https://wa.me/5511945439292">Chamar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<section id="perguntas">
+  <div class="wrap duas-col">
+    <div class="intro">
+      <h2>Para conversarmos hoje</h2>
+      <p>O que nos ajuda a desenhar o caminho certo para a clínica.</p>
+    </div>
+    <ol class="perguntas">
+      <li>Como os pacientes novos chegam hoje, e quem responde o primeiro contato?</li>
+      <li>Onde ficam a agenda, as fichas e os planos de tratamento?</li>
+      <li>O que mais toma tempo da recepção numa semana normal?</li>
+      <li>O que acontece com quem faz a avaliação e não volta?</li>
+      <li>Por onde faria sentido começar?</li>
+    </ol>
+  </div>
+</section>
+
+<footer class="escuro"><div class="wrap"><span class="logo" aria-label="BLMS AI">BLMS<i></i><span>AI</span></span><span class="cinza">Apresentação para a Clínica Eduardo Parente</span></div></footer>
+
+<dialog id="dlg" aria-labelledby="dlg-t">
+  <div class="modal" tabindex="-1" autofocus>
+    <div class="palco" id="palco"></div>
+    <div class="lado">
+      <p class="tipo" id="dlg-tipo"></p>
+      <h3 id="dlg-t"></h3>
+      <p id="dlg-d"></p>
+      <div class="navs"><button data-ir="-1">Anterior</button><button data-ir="1">Próximo</button><button data-fechar>Fechar</button></div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+var MOD = [
+  { g: 'ar', t: 'Agenda do consultório', d: 'Semana e dia na mesma tela, com as consultas de cada horário e os pedidos que chegaram pelo site esperando aprovação.', v: 'clips/n1.mp4', x: 'Consultório odontológico da Dra. Natália Dias. Um toque na consulta mostra o paciente, o horário e o atalho para a ficha.' },
+  { g: 'ar', t: 'Ficha do paciente', d: 'Odontograma, plano de tratamento com valores, evoluções registradas e anamnese, com alerta de alergia no topo da ficha.', v: 'clips/n2.mp4', x: 'Da lista de pacientes para a ficha: odontograma, plano em aberto e finalizado, evoluções e anamnese. Dados de demonstração.' },
+  { g: 'ar', t: 'Agendamento pelo celular', d: 'O cliente escolhe o serviço, o profissional e um horário que está livre de verdade, e confirma em poucos toques.', v: 'clips/a1.mp4', x: 'Site de uma barbearia que atendemos: o cliente marca sozinho, sem precisar chamar ninguém.' },
+  { g: 'ar', t: 'Painel do dono', d: 'Agenda do dia e financeiro: faturamento, atendimentos, ticket médio e o que cada serviço trouxe no mês.', v: 'clips/a2.mp4', x: 'O mesmo sistema da barbearia, visto pelo dono: a agenda de hoje e as finanças do mês.' },
+  { g: 'cl', t: 'Primeiro contato fora do horário', d: 'Paciente novo manda mensagem à noite ou no fim de semana e já recebe o caminho para marcar a avaliação.', s: 's1', x: 'Sábado à noite, clínica fechada: a mensagem de boas-vindas sai com o link da agenda e a avaliação fica marcada.' },
+  { g: 'cl', t: 'A equipe aprova antes de enviar', d: 'Nas mensagens do dia, a resposta chega pronta para a recepção conferir e enviar. Dúvida clínica não recebe resposta automática: vai para o Dr. Eduardo.', s: 's2', x: 'A recepção confere e envia com um toque. A pergunta sobre dor depois do procedimento fica separada para o Dr. Eduardo.' },
+  { g: 'cl', t: 'Confirmação e véspera', d: 'Confirmação quando a consulta é marcada e lembrete na véspera, com resposta 1 para confirmar e 2 para remarcar.', s: 's3', x: 'O paciente responde 1 ou 2 e a agenda já fica atualizada, sem a recepção ligar para cada um.' },
+  { g: 'cl', t: 'Avaliação que não voltou', d: 'Quem fez a avaliação e não marcou a próxima etapa recebe um contato no prazo que a clínica definir.', s: 's4', x: 'Quinze dias depois da avaliação, sem retorno: o convite sai com o link da agenda.' },
+  { g: 'cl', t: 'Antes e depois do procedimento', d: 'Na véspera, as orientações que o Dr. Eduardo definiu. No dia seguinte, um contato para saber como o paciente está.', s: 's5', x: 'Se o paciente responde que não está bem, a equipe recebe o aviso para ligar. O sistema não dá orientação clínica.' },
+  { g: 'cl', t: 'O mês em uma tela', d: 'Quantos contatos chegaram, quantos viraram avaliação, quantos compareceram e quantos voltaram.', s: 's6', x: 'O resumo do mês para o Dr. Eduardo. Os números são ilustrativos.' }
+];
+
+['ar', 'cl'].forEach(function (g) {
+  document.getElementById('mods-' + g).innerHTML = MOD.map(function (m, i) {
+    if (m.g !== g) return '';
+    return '<button class="mod" data-i="' + i + '"><span class="n">' + String(i + 1).padStart(2, '0') + '</span><span><b>' + m.t + '</b><span class="d">' + m.d + '</span></span><span class="bt' + (m.v ? '' : ' sim') + '">' + (m.v ? 'Ver funcionando' : 'Ver simulação') + '</span></button>';
+  }).join('');
+});
+
+var dlg = document.getElementById('dlg'), palco = document.getElementById('palco'), atual = 0, timers = [];
+function limpar() { timers.forEach(clearTimeout); timers = []; palco.innerHTML = ''; }
+function depois(ms, fn) { timers.push(setTimeout(fn, ms)); }
+function el(html) { var d = document.createElement('div'); d.innerHTML = html.trim(); return d.firstChild; }
+
+function abrir(i) {
+  atual = (i + MOD.length) % MOD.length; var m = MOD[atual]; limpar();
+  document.getElementById('dlg-t').textContent = String(atual + 1).padStart(2, '0') + '. ' + m.t;
+  document.getElementById('dlg-d').textContent = m.x;
+  document.getElementById('dlg-tipo').textContent = m.v ? 'Gravado no sistema em uso' : 'Simulação do que montaríamos';
+  if (m.v) palco.appendChild(el('<video src="' + m.v + '" autoplay muted loop playsinline></video>'));
+  else SIM[m.s]();
+  if (!dlg.open) dlg.showModal();
+}
+document.addEventListener('click', function (e) { var b = e.target.closest('.mod'); if (b) abrir(+b.dataset.i); });
+dlg.addEventListener('click', function (e) {
+  if (e.target === dlg || e.target.closest('[data-fechar]')) dlg.close();
+  var ir = e.target.closest('[data-ir]'); if (ir) abrir(atual + +ir.dataset.ir);
+});
+dlg.addEventListener('close', limpar);
+document.addEventListener('keydown', function (e) { if (dlg.open && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) abrir(atual + (e.key === 'ArrowRight' ? 1 : -1)); });
+
+function celular() {
+  var c = el('<div class="cel-sim"><div class="barra"><i>EP</i><div>Clínica Eduardo Parente<small>conta comercial</small></div></div><div class="chat"></div></div>');
+  palco.appendChild(c); return c;
+}
+// roteiro: [ms, tipo, texto, hora]; tipo: 'n' clinica, 'eu' paciente, 'div' separador
+function conversa(cel, roteiro, fim) {
+  var chat = cel.querySelector('.chat'), t = 0;
+  roteiro.forEach(function (r) {
+    // tempo de leitura: cerca de 25 ms por caractere, no minimo 1,4x o tempo do roteiro
+    t += Math.max(r[0] * 1.4, 900 + String(r[2]).replace(/<[^>]*>/g, '').length * 25);
+    if (r[1] === 'n') depois(t - 900, function () { chat.appendChild(el('<div class="digit"><span></span><span></span><span></span></div>')); });
+    depois(t, function () {
+      var d = chat.querySelector('.digit'); if (d) d.remove();
+      if (r[1] === 'div') chat.appendChild(el('<div class="div">' + r[2] + '</div>'));
+      else chat.appendChild(el('<div class="b' + (r[1] === 'eu' ? ' eu' : '') + '">' + r[2] + '<span class="h">' + (r[3] || '') + '</span></div>'));
+      while (chat.scrollHeight > chat.clientHeight + 4 && chat.children.length > 1) chat.removeChild(chat.firstChild);
+    });
+  });
+  depois(t + 4000, fim);
+}
+function repetir() { abrir(atual); }
+var SIM = {
+  s1: function () {
+    conversa(celular(), [
+      [800, 'div', 'Sábado, 21:40'],
+      [1300, 'eu', 'Boa noite! Vi o Instagram de vocês e queria saber sobre implante.', '21:40'],
+      [1700, 'n', 'Boa noite! Obrigado pelo contato com a Clínica Eduardo Parente. O primeiro passo é uma avaliação com o Dr. Eduardo, para ele indicar o melhor caminho para o seu caso.<span class="lk">Ver horários de avaliação</span>', '21:40'],
+      [2600, 'eu', 'Marquei para terça às 14h', '21:46'],
+      [1500, 'n', 'Avaliação confirmada: terça, 17/11, às 14h. Na segunda a recepção entra em contato para tirar qualquer dúvida.', '21:46']
+    ], repetir);
+  },
+  s2: function () {
+    var p = el('<div class="painel-sim"><h4>Mensagens para responder</h4>' +
+      '<div class="msg"><p class="quem">Renata Souza, 10:12</p><p class="pac">"Vocês fazem clareamento? Tem horário no sábado?"</p><div class="sug">Olá, Renata! Fazemos sim. Antes do clareamento o Dr. Eduardo faz uma avaliação. Temos sábado, 21/11, às 9h ou às 10h30. Qual fica melhor?</div><div class="acoes"><span class="ok" data-ok>Enviar</span><span>Editar</span></div></div>' +
+      '<div class="msg clinica" style="animation-delay:.5s"><p class="quem">Marcos Lima, 10:20</p><p class="pac">"Estou com dor desde a extração de ontem, é normal?"</p><div class="sug">Dúvida clínica. Sem resposta automática: encaminhada ao Dr. Eduardo.</div><div class="acoes"><span>Ligar para o paciente</span></div></div>' +
+      '<div class="cursor" style="left:70%;top:12%"></div></div>');
+    palco.appendChild(p);
+    var cur = p.querySelector('.cursor'), ok = p.querySelector('[data-ok]');
+    depois(1600, function () { var r = ok.getBoundingClientRect(), b = p.getBoundingClientRect(); cur.style.left = (r.left - b.left + r.width / 2 - 9) + 'px'; cur.style.top = (r.top - b.top + 2) + 'px'; });
+    depois(2500, function () { cur.classList.add('clic'); });
+    depois(2700, function () { cur.classList.remove('clic'); ok.parentNode.innerHTML = '<span class="feito">Enviada pela recepção às 10:14</span>'; });
+    depois(8000, repetir);
+  },
+  s3: function () {
+    conversa(celular(), [
+      [800, 'div', 'Quinta, 12 de novembro'],
+      [1300, 'n', 'Olá, Carla! Sua consulta com o Dr. Eduardo está marcada para terça, 17/11, às 9h.', '16:05'],
+      [2000, 'div', 'Segunda, 16 de novembro (véspera)'],
+      [1300, 'n', 'Carla, amanhã às 9h tem consulta sua na clínica. Responda <b>1</b> para confirmar ou <b>2</b> para remarcar.', '10:00'],
+      [1800, 'eu', '1', '10:09'],
+      [1300, 'n', 'Confirmado! Até amanhã, Carla.', '10:09']
+    ], repetir);
+  },
+  s4: function () {
+    conversa(celular(), [
+      [800, 'div', 'Avaliação em 20 de outubro'],
+      [1500, 'div', '15 dias depois, sem próxima etapa marcada'],
+      [1300, 'n', 'Olá, Paulo! Ficou alguma dúvida sobre o plano que o Dr. Eduardo apresentou na avaliação? Se quiser, já deixamos a próxima etapa marcada.<span class="lk">Ver horários</span>', '11:00'],
+      [2200, 'eu', 'Quero sim, pode ser quinta de manhã?', '11:32'],
+      [1500, 'n', 'Combinado, Paulo. A recepção confirma o horário com você em seguida.', '11:33']
+    ], repetir);
+  },
+  s5: function () {
+    conversa(celular(), [
+      [800, 'div', 'Quarta, véspera da cirurgia'],
+      [1300, 'n', 'Olá, Fernanda! Amanhã às 8h é a sua cirurgia. Aqui estão as orientações do Dr. Eduardo para hoje e amanhã.<span class="lk">Ver orientações</span>', '17:00'],
+      [2000, 'div', 'Sexta, dia seguinte'],
+      [1300, 'n', 'Bom dia, Fernanda! Como você está? Responda <b>1</b> se está tudo bem ou <b>2</b> se quiser falar com a equipe.', '09:00'],
+      [1800, 'eu', '2', '09:14'],
+      [1300, 'n', 'Obrigado por avisar. A equipe vai ligar para você em instantes.', '09:14'],
+      [1400, 'div', 'Aviso enviado para a equipe']
+    ], repetir);
+  },
+  s6: function () {
+    var k = [[182, 'Primeiros contatos'], [64, 'Avaliações marcadas'], [51, 'Compareceram'], [17, 'Voltaram pelo convite']];
+    var p = el('<div class="painel-sim" style="width:min(460px,100%)"><h4>Novembro na clínica</h4><dl>' + k.map(function (x) { return '<div><dt>' + x[1] + '</dt><dd data-ate="' + x[0] + '">0</dd></div>'; }).join('') + '</dl><p class="nota">Números ilustrativos.</p></div>');
+    palco.appendChild(p);
+    var ini = performance.now();
+    (function passo(t) { var f = Math.min(1, (t - ini) / 1800), e = 1 - Math.pow(1 - f, 3); p.querySelectorAll('[data-ate]').forEach(function (b) { b.textContent = Math.round(b.dataset.ate * e); }); if (f < 1 && p.isConnected) requestAnimationFrame(passo); })(ini);
+    depois(7000, repetir);
+  }
+};
+</script>
+
+
+</body></html>
